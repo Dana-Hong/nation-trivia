@@ -1,14 +1,13 @@
 "use client";
 
-import { Fragment } from "react";
-
 type DropdownProps = {
-    items?: string[];
-    className?: string;
-}
+  items?: string[];
+  className?: string;
+};
+
 export default function Dropdown({ className, items }: DropdownProps) {
   return (
-    <Fragment>
+    <>
       <button
         id="dropdownDefaultButton"
         data-dropdown-toggle="dropdown"
@@ -74,6 +73,6 @@ export default function Dropdown({ className, items }: DropdownProps) {
           </li>
         </ul>
       </div>
-    </Fragment>
+    </>
   );
 }

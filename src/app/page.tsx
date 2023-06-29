@@ -1,4 +1,3 @@
-import { Fragment } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import Earth from "../../public/earth-placeholder.jpg";
@@ -23,7 +22,10 @@ async function listCountriesByRegion() {
       <p className="text-3xl">{region[i].region}</p>
       <ul>
         {region.map((country: Country) => (
-          <li key={country.name.common}>{country.name.common}</li>
+          <li key={country.name.common}>
+            <p>{country.name.common}</p>
+            <p>{country.cca3}</p>
+          </li>
         ))}
       </ul>
     </div>
@@ -47,53 +49,63 @@ type Country = {
   name: {
     common: string;
   };
+  cca3: string;
   flags: Flags;
   region: string;
   subregion: string;
 };
 
-type Region = "africa" | "americas" | "asia" | "europe" | "oceania";
+// type Region = "africa" | "americas" | "asia" | "europe" | "oceania";
 
 export default async function Home() {
   const fetchedRegion = await getCountriesByRegion("EUROPE");
   console.dir(fetchedRegion, { depth: null });
   const data = await getAllCountries();
 
-  const sortedCountries = sortCountriesAlphabetic(fetchedRegion, true).map((country: Country) => (
-    <li key={country.name.common}>
-      <p>{country.name.common}</p>
-      <Image
-        src={country.flags.svg}
-        alt={country.flags.alt ?? `${country.name.common} flag`}
-        width={200}
-        height={120}
-      />
-    </li>
-  ));
+  const sortedCountries = sortCountriesAlphabetic(fetchedRegion, true).map(
+    (country: Country) => (
+      <li key={country.name.common}>
+        <p>{country.name.common}</p>
+        <Image
+          src={country.flags.svg}
+          alt={country.flags.alt ?? `${country.name.common} flag`}
+          width={200}
+          height={120}
+        />
+      </li>
+    )
+  );
 
   return (
-    <Fragment>
+    <>
       <Header />
       <main className="bg-blue- grow flex flex-col justify-center gap-2">
-          <section className="flex flex-col gap-2">
+        <section className="flex flex-col gap-2">
           <h1 className="text-3xl text-center">Nation Trivia</h1>
           <Image src={Earth} alt="Earth" />
-          </section>
-          <div className="flex flex-col max-w-[70vw] mx-auto gap-2">
-            <Link className="inline-block rounded-md border px-2 py-3" href={"./quiz"}>
-              Quiz
-            </Link>
-            <Link className="inline-block rounded-md border px-2 py-3" href={"./countries"}>
-              Countries Database
-            </Link>
-          </div>
-          {/* <div>{sortedCountries}</div> */}
-          {/* <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">{listCountriesByRegion()}L</div> */}
+        </section>
+        <div className="flex flex-col max-w-[70vw] mx-auto gap-2">
+          <Link
+            className="inline-block rounded-md border px-2 py-3"
+            href={"./quizzes"}
+          >
+            Quiz
+          </Link>
+          <Link
+            className="inline-block rounded-md border px-2 py-3"
+            href={"./countries"}
+          >
+            Countries Database
+          </Link>
+        </div>
+        <div>{listCountriesByRegion()}</div>
+        {/* <div>{sortedCountries}</div> */}
+        {/* <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">{listCountriesByRegion()}L</div> */}
         {/* <ul className="grid grid-cols-2">{sortedCountries}</ul> */}
         <p>{/* {data[0].name.official} */}</p>
         {/* <Image src={`${data[0].flags.svg}`} alt={data[0].flags.alt} width={120} height={120}/> */}
       </main>
       <Footer />
-    </Fragment>
+    </>
   );
 }

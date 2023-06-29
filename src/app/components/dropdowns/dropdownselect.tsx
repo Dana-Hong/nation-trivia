@@ -1,14 +1,17 @@
 "use client";
 
 import { useState } from "react";
-import { REGIONS } from "../constants/geography";
+import { REGIONS } from "../../constants/geography";
 
 type DropdownSelectProps = {
   name: string;
   className?: string;
 };
 
-export default function DropdownSelect({ name, className }: DropdownSelectProps) {
+export default function DropdownSelect({
+  name,
+  className,
+}: DropdownSelectProps) {
   const [open, setOpen] = useState(false);
 
   function handleOptionSelect() {
@@ -16,7 +19,10 @@ export default function DropdownSelect({ name, className }: DropdownSelectProps)
   }
   const dropdownOptions = REGIONS.map((region) => (
     <li key={region}>
-      <button className="inline-flex w-full px-4 py-2 text-sm" onClick={handleOptionSelect}>
+      <button
+        className="inline-flex w-full px-4 py-2 text-sm"
+        onClick={handleOptionSelect}
+      >
         {region}
       </button>
     </li>
@@ -55,7 +61,10 @@ export default function DropdownSelect({ name, className }: DropdownSelectProps)
         >
           {dropdownOptions}
           <li key="Select Region">
-            <button className="inline-flex w-full px-4 py-2 text-sm" onClick={handleOptionSelect}>
+            <button
+              className="inline-flex w-full px-4 py-2 text-sm"
+              onClick={handleOptionSelect}
+            >
               Select Region
             </button>
           </li>
