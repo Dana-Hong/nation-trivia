@@ -11,7 +11,7 @@ export default function QuizLayout({
   return (
     <>
       <Header />
-      <main className="flex flex-col grow bg-red-900 mx-auto w-full">
+      <main className="flex flex-col grow mx-auto w-full">
         {children}
       </main>
       <Footer />

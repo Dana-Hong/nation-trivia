@@ -3,8 +3,10 @@ import Image from "next/image";
 import Earth from "../../public/earth-placeholder.jpg";
 import { getAllCountries, getCountriesByRegion } from "./utils";
 import { REGIONS } from "./constants/geography";
+// components
 import Header from "./components/header";
 import Footer from "./components/footer";
+import { Button } from "@/components/ui/button";
 
 async function listCountriesByRegion() {
   const regions = REGIONS;
@@ -62,19 +64,17 @@ export default async function Home() {
   console.dir(fetchedRegion, { depth: null });
   const data = await getAllCountries();
 
-  const sortedCountries = sortCountriesAlphabetic(fetchedRegion, true).map(
-    (country: Country) => (
-      <li key={country.name.common}>
-        <p>{country.name.common}</p>
-        <Image
-          src={country.flags.svg}
-          alt={country.flags.alt ?? `${country.name.common} flag`}
-          width={200}
-          height={120}
-        />
-      </li>
-    )
-  );
+  const sortedCountries = sortCountriesAlphabetic(fetchedRegion, true).map((country: Country) => (
+    <li key={country.name.common}>
+      <p>{country.name.common}</p>
+      <Image
+        src={country.flags.svg}
+        alt={country.flags.alt ?? `${country.name.common} flag`}
+        width={200}
+        height={120}
+      />
+    </li>
+  ));
 
   return (
     <>
@@ -86,16 +86,16 @@ export default async function Home() {
         </section>
         <div className="flex flex-col max-w-[70vw] mx-auto gap-2">
           <Link
-            className="inline-block rounded-md border px-2 py-3"
-            href={"./quizzes"}
+            className="inline-block"
+            href={"/quizzes"}
           >
-            Quiz
+            <Button className="w-full">Quiz</Button>
           </Link>
           <Link
-            className="inline-block rounded-md border px-2 py-3"
-            href={"./countries"}
+            className="inline-block"
+            href={"/countries"}
           >
-            Countries Database
+            <Button className="w-full">Countries Database</Button>
           </Link>
         </div>
         <div>{listCountriesByRegion()}</div>

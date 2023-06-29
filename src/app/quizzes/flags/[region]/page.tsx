@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { Country, Region } from "@/app/types";
 import { getCountriesByRegion } from "@/app/utils";
+import { Button } from "@/components/ui/button";
 
 type QuizType = {
   correctAnswer: Country;
@@ -30,13 +31,9 @@ export default function Page({ params }: { params: { region: string } }) {
    *
    */
   function handleClick(quizOptions: QuizOption[], countryName: string) {
-    const option = quizOptions.filter(
-      (option) => option.name === countryName
-    )[0];
+    const option = quizOptions.filter((option) => option.name === countryName)[0];
     if (option.correctAnswer) {
-      setCountries((c) =>
-        c.filter((country) => country.name.common !== option.name)
-      );
+      setCountries((c) => c.filter((country) => country.name.common !== option.name));
       setCorrectlyGuessed((cg) => [...cg, option.name]);
       return;
     }
@@ -97,9 +94,7 @@ export default function Page({ params }: { params: { region: string } }) {
   }, [countries]);
 
   const correctCountry =
-    quizOptions !== null
-      ? quizOptions!.filter((option) => option.correctAnswer)[0]
-      : null;
+    quizOptions !== null ? quizOptions!.filter((option) => option.correctAnswer)[0] : null;
 
   return (
     <div className="max-w-[1440px] w-full grow bg-red-300 mx-auto flex flex-col gap-10 items-center">
@@ -107,14 +102,12 @@ export default function Page({ params }: { params: { region: string } }) {
       {countries.length === 0 ? (
         <p>Game over!</p>
       ) : (
-        <div>
+        <div className="flex flex-col gap-2 items-center w-full">
           {correctCountry !== null && (
-            <div className="relative h-56 w-[398px]">
+            <div className="relative h-40 md:h-56 w-60 md:w-[398px]">
               <Image
                 src={correctCountry.flags!.png}
-                alt={
-                  correctCountry?.flags?.alt ?? `${correctCountry.name} flag`
-                }
+                alt={correctCountry?.flags?.alt ?? `${correctCountry.name} flag`}
                 fill={true}
                 style={{ objectFit: "cover" }}
               />
@@ -123,15 +116,15 @@ export default function Page({ params }: { params: { region: string } }) {
           <div className="border grid grid-cols-2 gap-3 max-w-lg w-full pt-12">
             {quizOptions !== null &&
               quizOptions.map((country) => (
-                <button
-                  className="inline-flex items-center justify-center py-2 px-3 rounded-md ring-[1px] wrap"
+                <Button
+                  variant="outline"
                   key={country.name}
                   onClick={() => {
                     handleClick(quizOptions, country.name);
                   }}
                 >
                   {country.name}
-                </button>
+                </Button>
               ))}
           </div>
         </div>
