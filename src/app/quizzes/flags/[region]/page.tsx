@@ -5,6 +5,7 @@ import Image from "next/image";
 import { Country, Region } from "@/app/types";
 import { getCountriesByRegion } from "@/app/utils";
 import { Button } from "@/components/ui/button";
+import { Progress } from "@/components/ui/progress"
 
 type QuizType = {
   correctAnswer: Country;
@@ -95,10 +96,16 @@ export default function Page({ params }: { params: { region: string } }) {
 
   const correctCountry =
     quizOptions !== null ? quizOptions!.filter((option) => option.correctAnswer)[0] : null;
+  
+    const progress = Math.floor((correctlyGuessed.length / numberOfFlags.current) * 100)
+    console.log('progress:', `${progress}%`);
 
   return (
     <div className="max-w-[1440px] w-full grow bg-red-300 mx-auto flex flex-col gap-10 items-center">
+      <div>
       <p className="pt-20">{`${correctlyGuessed.length}/${numberOfFlags.current}`}</p>
+    <Progress value={progress} className="w-40 h-2" />
+      </div>
       {countries.length === 0 ? (
         <p>Game over!</p>
       ) : (
