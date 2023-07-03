@@ -79,26 +79,30 @@ export default async function Home() {
   return (
     <>
       <Header />
-      <main className="bg-blue- grow flex flex-col justify-center gap-2">
-        <section className="flex flex-col gap-2">
-          <h1 className="text-3xl text-center">Nation Trivia</h1>
-          <Image src={Earth} alt="Earth" />
-        </section>
-        <div className="flex flex-col max-w-[70vw] mx-auto gap-2">
-          <Link
-            className="inline-block"
-            href={"/quizzes"}
-          >
+      <main className="grow flex flex-col gap-2">
+        <section className="pt-6 pb-8 md:pb-12 md:pt-10 lg:py-32 flex flex-col items-center gap-4 text-center">
+          <h1 className="font-semibold text-3xl sm:text-5xl md:text-6xl lg:text-7xl text-center">
+            Nation Trivia: <span className="block text-2xl sm:text-3xl md:text-4xl lg:text-5xl">
+              Unravel the World, One Flag at a Time
+              </span>
+          </h1>
+          <p className="leading-normal sm:text-lg sm:leading-8 max-w-2xl">
+            Are you ready to test your geography skills? Start your global journey and conquer our
+            nation trivia now!
+          </p>
+        <div className="flex max-w-[70vw] mx-auto items-center gap-2">
+          <Link className="inline-block" href={"/quizzes"}>
             <Button className="w-full">Quiz</Button>
           </Link>
-          <Link
-            className="inline-block"
-            href={"/countries"}
-          >
-            <Button className="w-full">Countries Database</Button>
+          <Link className="inline-block" href={"/countries"}>
+            <Button className="w-full truncate">Countries Database</Button>
           </Link>
         </div>
-        <div>{listCountriesByRegion()}</div>
+          {/* <div className="grow max-w-[1440px]">
+            <Image src={Earth} alt="Earth" />
+          </div> */}
+        </section>
+        {/* <div>{listCountriesByRegion()}</div> */}
         {/* <div>{sortedCountries}</div> */}
         {/* <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">{listCountriesByRegion()}L</div> */}
         {/* <ul className="grid grid-cols-2">{sortedCountries}</ul> */}
