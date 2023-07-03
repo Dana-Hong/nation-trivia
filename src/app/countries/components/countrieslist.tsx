@@ -1,6 +1,7 @@
 "use client";
 
 import { Fragment, useState, useEffect } from "react";
+import { DropdownMenuCheckboxItemProps } from "@radix-ui/react-dropdown-menu";
 import Link from "next/link";
 
 // components
@@ -8,12 +9,13 @@ import Filter from "./filter";
 import Sort from "./sort";
 import { Button } from "@/components/ui/button";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 // constants
 import { REGIONS } from "@/app/constants/geography";
@@ -34,7 +36,12 @@ export type FilterState = {
   checked: Region[];
 };
 
+type Checked = DropdownMenuCheckboxItemProps["checked"];
+
 export default function CountriesList() {
+  const [showStatusBar, setShowStatusBar] = useState<Checked>(true);
+  const [showActivityBar, setShowActivityBar] = useState<Checked>(false);
+  const [showNone, setShowNone] = useState<Checked>(false);
   const [filterStatus, setFilterStatus] = useState<FilterState>({
     open: false,
     checked: [...REGIONS],
@@ -98,16 +105,33 @@ export default function CountriesList() {
     <div>
       <div className="flex gap-2 justify-around">
         <Filter status={filterStatus} setFilterStatus={setFilterStatus} />
-        <Select>
-          <SelectTrigger className="bg-red-300 max-w-[300px]" >
-            <SelectValue placeholder="Sort by" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem onClick={() => console.log('test3')} value="something">Alphabetical - Ascending</SelectItem>
-            <SelectItem onClick={() => console.log('test')} value="something 2 ">Alphabetical - Descending</SelectItem>
-            <SelectItem value="None">None</SelectItem>
-          </SelectContent>
-          </Select> 
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline">Sort By</Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="w-60">
+            <DropdownMenuLabel>Order</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuCheckboxItem
+              checked={showStatusBar}
+              onCheckedChange={setShowStatusBar}
+            >
+              Alphabetical - Ascending
+            </DropdownMenuCheckboxItem>
+            <DropdownMenuCheckboxItem
+              checked={showActivityBar}
+              onCheckedChange={setShowActivityBar}
+            >
+              Alphabetical - Descending
+            </DropdownMenuCheckboxItem>
+            <DropdownMenuCheckboxItem
+              checked={showNone}
+              onCheckedChange={setShowNone}
+            >
+              None
+            </DropdownMenuCheckboxItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
         <Sort status={sortStatus} setSortStatus={setSortStatus} />
       </div>
       <div>{regionLists}</div>
