@@ -19,8 +19,9 @@ export default async function Page({
   const [country] = await getCountryByName(countryName);
   const currencies: Currency[] = Object.values(country.currencies);
   const languages: string[] = Object.values(country.languages);
+  console.log(country)
   const borderCountryCodes: string[] | null =
-    Object.values(country.borders) ?? null;
+  country?.borders !== undefined ? Object.values(country.borders) : null;
 
   const borderCountries: string[] | null = borderCountryCodes
     ? await Promise.all(
@@ -45,8 +46,6 @@ export default async function Page({
             alt={country.flags.png ?? `${country.name.common} flag`}
             fill={true}
             style={{ objectFit: "cover" }}
-            // height={120}
-            // width={200}
           />
         </div>
       </section>

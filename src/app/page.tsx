@@ -4,8 +4,8 @@ import Earth from "../../public/earth-placeholder.jpg";
 import { getAllCountries, getCountriesByRegion } from "./utils";
 import { REGIONS } from "./constants/geography";
 // components
-import Header from "./components/header";
-import Footer from "./components/footer";
+import Header from "../components/header";
+import Footer from "../components/footer";
 import { Button } from "@/components/ui/button";
 
 async function listCountriesByRegion() {

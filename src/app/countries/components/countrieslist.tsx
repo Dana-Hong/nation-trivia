@@ -7,15 +7,6 @@ import Link from "next/link";
 // components
 import Filter from "./filter";
 import Sort from "./sort";
-import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 
 // constants
 import { REGIONS } from "@/app/constants/geography";
@@ -39,9 +30,6 @@ export type FilterState = {
 type Checked = DropdownMenuCheckboxItemProps["checked"];
 
 export default function CountriesList() {
-  const [showStatusBar, setShowStatusBar] = useState<Checked>(true);
-  const [showActivityBar, setShowActivityBar] = useState<Checked>(false);
-  const [showNone, setShowNone] = useState<Checked>(false);
   const [filterStatus, setFilterStatus] = useState<FilterState>({
     open: false,
     checked: [...REGIONS],
@@ -85,13 +73,14 @@ export default function CountriesList() {
 
   const regionLists = selectedRegions?.map((region, i) => (
     <Fragment key={region[0].region}>
-      <h3 className="text-3xl">{region[i].region}</h3>
+      <h3 className="text-3xl text-center">{region[i].region}</h3>
       <ul>
         {region.map((country) => {
           const countryName = country.name.common.split(" ").join("-");
           return (
             <li key={countryName}>
               <Link href={`/countries/${countryName}`}>
+                {countryName}
                 {country.name.common}
               </Link>
             </li>
@@ -105,36 +94,9 @@ export default function CountriesList() {
     <div>
       <div className="flex gap-2 justify-around">
         <Filter status={filterStatus} setFilterStatus={setFilterStatus} />
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline">Sort By</Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent className="w-60">
-            <DropdownMenuLabel>Order</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuCheckboxItem
-              checked={showStatusBar}
-              onCheckedChange={setShowStatusBar}
-            >
-              Alphabetical - Ascending
-            </DropdownMenuCheckboxItem>
-            <DropdownMenuCheckboxItem
-              checked={showActivityBar}
-              onCheckedChange={setShowActivityBar}
-            >
-              Alphabetical - Descending
-            </DropdownMenuCheckboxItem>
-            <DropdownMenuCheckboxItem
-              checked={showNone}
-              onCheckedChange={setShowNone}
-            >
-              None
-            </DropdownMenuCheckboxItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
         <Sort status={sortStatus} setSortStatus={setSortStatus} />
       </div>
-      <div>{regionLists}</div>
+      <div className="px-4">{regionLists}</div>
     </div>
   );
 }
