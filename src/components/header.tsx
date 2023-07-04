@@ -4,6 +4,8 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
+import Close from "./icons/close";
+
 export default function Header() {
   const [open, setOpen] = useState(false);
 
@@ -30,15 +32,24 @@ export default function Header() {
           <Link href={"/scores"}>Scores</Link>
         </Button>
       </nav>
-      <nav className={`${!open ? "-translate-x-full" : "-translate-x-0"} flex transition-transform top-0 left-0 w-full h-screen absolute`}>
+      <nav
+        className={`${
+          !open ? "-translate-x-full" : "-translate-x-0"
+        } flex transition-transform top-0 left-0 w-full h-screen absolute`}
+      >
         <div className="flex flex-col pt-8 px-8 gap-2 bg-zinc-900 h-full w-3/4 max-w-lg">
-          <Link
-            href={"/"}
-            className="font-medium text-xl text-zinc-200 py-2 border-b"
-            onClick={handleClick}
-          >
-            Home
-          </Link>
+          <div className="flex justify-between border-b">
+            <Link
+              href={"/"}
+              className="font-medium text-xl text-zinc-200 py-2"
+              onClick={handleClick}
+            >
+              Home
+            </Link>
+            <div onClick={handleClick}>
+              <Close className="-mt-3 -mr-2 fill-zinc-200 h-7 w-7" />
+            </div>
+          </div>
           <Link
             href={"/about"}
             className="font-medium text-base text-zinc-200"
@@ -53,7 +64,12 @@ export default function Header() {
             Scores
           </Link>
         </div>
-        <div className={`grow ${!open ? 'bg-transparent' : 'bg-zinc-800 bg-opacity-80'} delay-100 transition-colors`} onClick={handleClick}></div>
+        <div
+          className={`grow ${
+            !open ? "bg-transparent" : "bg-zinc-800 bg-opacity-90"
+          } delay-100 transition-colors`}
+          onClick={handleClick}
+        ></div>
       </nav>
     </header>
   );
