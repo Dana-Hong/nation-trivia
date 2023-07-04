@@ -79,10 +79,7 @@ export default function CountriesList() {
           const countryName = country.name.common.split(" ").join("-");
           return (
             <li key={countryName}>
-              <Link href={`/countries/${countryName}`}>
-                {countryName}
-                {country.name.common}
-              </Link>
+              <Link href={`/countries/${countryName}`}>{countryName}</Link>
             </li>
           );
         })}
