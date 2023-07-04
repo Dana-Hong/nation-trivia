@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import BurgerMenu from "./icons/burger-menu";
 import Link from "next/link";
 
 import Close from "./icons/close";
@@ -14,14 +15,14 @@ export default function Header() {
   }
 
   return (
-    <header className="flex justify-between items-center py-1 px-2 border-b relative">
+    <header className="relative z-50 flex items-center justify-between border-b px-2 py-1">
       <Link href={"/"}>
         <Button className="w-full">NT</Button>
       </Link>
       <button className="sm:hidden" onClick={handleClick}>
-        menu
+        <BurgerMenu className="h-6 w-6" />
       </button>
-      <nav className="hidden sm:flex gap-4">
+      <nav className="hidden gap-4 sm:flex">
         <Button variant="link">
           <Link href={"/about"}>About</Link>
         </Button>
@@ -35,24 +36,24 @@ export default function Header() {
       <nav
         className={`${
           !open ? "-translate-x-full" : "-translate-x-0"
-        } flex transition-transform top-0 left-0 w-full h-screen absolute`}
+        } absolute left-0 top-0 flex h-screen w-full transition-transform`}
       >
-        <div className="flex flex-col pt-8 px-8 gap-2 bg-zinc-900 h-full w-3/4 max-w-lg">
+        <div className="flex h-full w-3/4 max-w-lg flex-col gap-2 bg-zinc-900 px-8 pt-8">
           <div className="flex justify-between border-b">
             <Link
               href={"/"}
-              className="font-medium text-xl text-zinc-200 py-2"
+              className="py-2 text-xl font-medium text-zinc-200"
               onClick={handleClick}
             >
               Home
             </Link>
             <div onClick={handleClick}>
-              <Close className="-mt-3 -mr-2 fill-zinc-200 h-7 w-7" />
+              <Close className="-mr-2 -mt-3 h-7 w-7 fill-zinc-200" />
             </div>
           </div>
           <Link
             href={"/about"}
-            className="font-medium text-base text-zinc-200"
+            className="text-base font-medium text-zinc-200"
             onClick={handleClick}
           >
             About
@@ -67,7 +68,7 @@ export default function Header() {
         <div
           className={`grow ${
             !open ? "bg-transparent" : "bg-zinc-800 bg-opacity-90"
-          } delay-100 transition-colors`}
+          } transition-colors delay-100`}
           onClick={handleClick}
         ></div>
       </nav>
