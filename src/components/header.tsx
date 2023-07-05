@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import BurgerMenu from "./icons/burger-menu";
 import Link from "next/link";
 
+import EarthLogo from "./icons/earth-logo";
 import Close from "./icons/close";
 
 export default function Header() {
@@ -16,8 +17,9 @@ export default function Header() {
 
   return (
     <header className="relative z-50 flex items-center justify-between border-b px-2 py-1">
-      <Link href={"/"}>
-        <Button className="w-full">NT</Button>
+      <Link href={"/"} className="inline-flex gap-2">
+        <EarthLogo className="h-6 w-6" />
+        <span className="font-bold">Nation Trivia</span>
       </Link>
       <button className="sm:hidden" onClick={handleClick}>
         <BurgerMenu className="h-6 w-6" />
@@ -28,6 +30,9 @@ export default function Header() {
         </Button>
         <Button variant="link">
           <Link href={"/countries"}>Countries Database</Link>
+        </Button>
+        <Button variant="link">
+          <Link href={"/quizzes"}>Quizzes</Link>
         </Button>
         <Button variant="link">
           <Link href={"/scores"}>Scores</Link>
@@ -60,6 +65,9 @@ export default function Header() {
           </Link>
           <Link href={"/countries"} className="text-base text-zinc-200" onClick={handleClick}>
             Countries Database
+          </Link>
+          <Link href={"/quizzes"} className="text-base text-zinc-200" onClick={handleClick}>
+            Quizzes
           </Link>
           <Link href={"/scores"} className="text-base text-zinc-200">
             Scores
