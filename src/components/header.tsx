@@ -27,9 +27,6 @@ export default function Header() {
         <BurgerMenu className="h-6 w-6" />
       </button>
       <nav className="hidden gap-4 sm:flex">
-        <Link href={"/about"}>
-          <Button variant="link">About</Button>
-        </Link>
         <Link href={"/countries"}>
           <Button variant="link">Countries Database</Button>
         </Link>
@@ -57,13 +54,6 @@ export default function Header() {
               <Close className="-mr-2 -mt-3 h-7 w-7 fill-zinc-200" />
             </div>
           </div>
-          <Link
-            href={"/about"}
-            className="text-base font-medium text-zinc-200"
-            onClick={handleClick}
-          >
-            About
-          </Link>
           <Link href={"/countries"} className="text-base text-zinc-200" onClick={handleClick}>
             Countries Database
           </Link>
