@@ -1,11 +1,12 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import Link from "next/link";
 import Image from "next/image";
 import { Country, Region } from "@/app/types";
-import { getCountriesByRegion } from "@/app/utils";
+import { getAllCountries, getCountriesByRegion } from "@/app/utils";
 import { Button } from "@/components/ui/button";
-import { Progress } from "@/components/ui/progress"
+import { Progress } from "@/components/ui/progress";
 
 type QuizType = {
   correctAnswer: Country;
@@ -20,17 +21,13 @@ type QuizOption = {
 
 export default function Page({ params }: { params: { region: string } }) {
   const numberOfFlags = useRef(0);
+  const staticCountries = useRef<Country[] | null>(null);
   const [countries, setCountries] = useState<Country[]>([]);
   const [correctlyGuessed, setCorrectlyGuessed] = useState<string[]>([]);
+  const [incorrectlyGuessed, setIncorrectlyGuessed] = useState<Set<Country>>(new Set());
   const [quizOptions, setQuizOptions] = useState<QuizOption[] | null>(null);
   const region = params.region;
-  /**
-   * have a counter that says number of correct / total flags
-   * have a hidden counter that is displayed when you quit or finish the quiz that tells you what flags you guessed wrong, and number of incorrect guesses
-   * each question should have ONE correct answer.
-   * the correctly guessed flags should not show up in the potential wrong answers pool if there are more than <difficulty> questions left
-   *
-   */
+
   function handleClick(quizOptions: QuizOption[], countryName: string) {
     const option = quizOptions.filter((option) => option.name === countryName)[0];
     if (option.correctAnswer) {
@@ -38,101 +35,141 @@ export default function Page({ params }: { params: { region: string } }) {
       setCorrectlyGuessed((cg) => [...cg, option.name]);
       return;
     }
+    setIncorrectlyGuessed((ig) =>
+      ig.add(countries.filter((c) => c.name.common === countryName)[0])
+    );
     setCountries((c) => c.map((c) => c).sort((a, b) => 0.5 - Math.random()));
   }
 
   function generateQuizQuestion(countries: Country[], difficulty: number) {
-    console.log(countries.length);
     if (countries.length === 0) return null;
-    const quizSet = new Set<number>();
+    const randomIndex = Math.floor(Math.random() * countries.length);
+    const randomCountry = countries[randomIndex];
+    const correctAnswer = {
+      name: randomCountry.name.common,
+      correctAnswer: true,
+      flags: { ...randomCountry.flags },
+    };
 
-    let current = 0;
+    const countriesExcludingSelected = staticCountries!
+      .current!.filter((country) => country.name.common !== correctAnswer.name)
+      .sort((a, b) => 0.5 - Math.random())
+      .map((country) => ({
+        name: country.name.common,
+        correctAnswer: false,
+        flags: { ...country.flags },
+      }))
+      .slice(0, difficulty - 1);
 
-    while (current < 10) {
-      if (quizSet.size === difficulty) break;
-      const randomIndex = Math.floor(Math.random() * countries.length);
-      quizSet.add(randomIndex);
-      current++;
-    }
-
-    const quizList = Array.from(quizSet)
-      .map((randomIndex, i) => {
-        const randomCountry = countries[randomIndex];
-        return i === 0
-          ? {
-              name: randomCountry.name.common,
-              correctAnswer: true,
-              flags: { ...randomCountry.flags },
-            }
-          : { name: randomCountry.name.common, correctAnswer: false };
-      })
-      .sort((a, b) => 0.5 - Math.random());
+    countriesExcludingSelected.push(correctAnswer);
+    const quizList = countriesExcludingSelected.sort((a, b) => 0.5 - Math.random());
 
     return quizList;
   }
 
-  // console.log("1");
-  // console.log("6", countries);
-
   useEffect(() => {
-    // console.log("2");
     (async () => {
-      const countriesList = await getCountriesByRegion(region as Region);
-      // console.log("3:", countriesList);
+      const countriesList =
+        region === "all" ? await getAllCountries() : await getCountriesByRegion(region as Region);
       setCountries(countriesList);
       if (numberOfFlags.current < countriesList.length)
         numberOfFlags.current = countriesList.length;
+      if (!staticCountries.current) staticCountries.current = countriesList;
     })();
-    // console.log("this shouldn't be here");
   }, []);
 
   useEffect(() => {
-    console.log("4");
     const quizOptionsList = generateQuizQuestion(countries, 6);
-    console.log("5:", quizOptions);
-    console.log("7: this should be filled", quizOptions);
     setQuizOptions(quizOptionsList);
   }, [countries]);
 
+  async function handleReset() {
+    const countriesList = await getCountriesByRegion(region as Region);
+    setCountries(countriesList);
+    setCorrectlyGuessed((cg) => []);
+    setIncorrectlyGuessed(new Set());
+  }
+
   const correctCountry =
     quizOptions !== null ? quizOptions!.filter((option) => option.correctAnswer)[0] : null;
-  
-    const progress = Math.floor((correctlyGuessed.length / numberOfFlags.current) * 100)
-    console.log('progress:', `${progress}%`);
+
+  const progress = Math.floor((correctlyGuessed.length / numberOfFlags.current) * 100);
 
   return (
-    <div className="max-w-[1440px] w-full grow bg-red-300 mx-auto flex flex-col gap-10 items-center">
-      <div>
-      <p className="pt-20">{`${correctlyGuessed.length}/${numberOfFlags.current}`}</p>
-    <Progress value={progress} className="w-40 h-2" />
+    <div className="mx-auto flex w-full max-w-[1440px] grow flex-col items-center">
+      <div className="flex w-full max-w-3xl justify-between gap-2 pt-2 md:pt-4 lg:pt-8">
+        <Link href="/quizzes/flags">
+          <Button variant={"ghost"}>Back</Button>
+        </Link>
+        <Button variant={"ghost"}>Quit</Button>
       </div>
       {countries.length === 0 ? (
-        <p>Game over!</p>
-      ) : (
-        <div className="flex flex-col gap-2 items-center w-full">
-          {correctCountry !== null && (
-            <div className="relative h-40 md:h-56 w-60 md:w-[398px]">
-              <Image
-                src={correctCountry.flags!.png}
-                alt={correctCountry?.flags?.alt ?? `${correctCountry.name} flag`}
-                fill={true}
-                style={{ objectFit: "cover" }}
-              />
+        <div className="flex grow flex-col gap-4 py-6">
+          <div className="space-y-6">
+            <p className="text-center text-2xl font-semibold">Game over!</p>
+            <div className="flex justify-center gap-2">
+              <Link href="/quizzes/flags">
+                <Button>Guess More Regions</Button>
+              </Link>
+              <Link href={`/quizzes/flags/${region}`}>
+                <Button onClick={handleReset}>Replay</Button>
+              </Link>
             </div>
-          )}
-          <div className="border grid grid-cols-2 gap-3 max-w-lg w-full pt-12">
-            {quizOptions !== null &&
-              quizOptions.map((country) => (
-                <Button
-                  variant="outline"
-                  key={country.name}
-                  onClick={() => {
-                    handleClick(quizOptions, country.name);
-                  }}
-                >
-                  {country.name}
-                </Button>
+          </div>
+          <p className="border-b pb-2 text-center font-medium">Incorrect Guesses:</p>
+          <ul className="md: grid grid-cols-2 gap-4 sm:grid-cols-3">
+            {Array.from(incorrectlyGuessed)
+              .filter((country) => country !== undefined)
+              .map((country) => (
+                <li key={country.name.common} className="flex flex-col items-center gap-2 md:gap-4">
+                  <p className="text-center text-sm font-medium">
+                    {country?.name?.common || "nothing"}
+                  </p>
+                  <div className="relative h-20 w-32 md:h-28 md:w-48">
+                    <Image
+                      src={country.flags.svg ?? country.flags.png}
+                      alt={country.flags.alt ?? `${country.name.common} flag`}
+                      fill={true}
+                      sizes="(max-width: 128px)"
+                      style={{ objectFit: "cover" }}
+                    />
+                  </div>
+                </li>
               ))}
+          </ul>
+        </div>
+      ) : (
+        <div className="flex w-full grow flex-col items-center justify-center gap-8">
+          <div className="lg:pt- w-full max-w-3xl space-y-4 pt-2 md:pt-4">
+            <p className="text-center text-lg">{`${correctlyGuessed.length}/${numberOfFlags.current}`}</p>
+            <Progress value={progress} className="h-2 w-full" />
+          </div>
+          <div className="flex grow flex-col gap-12">
+            {correctCountry !== null && (
+              <div className="relative mx-auto h-40 w-60 md:h-52 md:w-96">
+                <Image
+                  src={correctCountry.flags!.png}
+                  alt={correctCountry?.flags?.alt ?? `${correctCountry.name} flag`}
+                  fill={true}
+                  sizes="(max-width: 128px)"
+                  style={{ objectFit: "contain" }}
+                />
+              </div>
+            )}
+            <div className="grid w-full max-w-lg grid-cols-2 gap-3 px-4 pt-8">
+              {quizOptions !== null &&
+                quizOptions.map((country) => (
+                  <Button
+                    variant="outline"
+                    key={country.name}
+                    onClick={() => {
+                      handleClick(quizOptions, country.name);
+                    }}
+                  >
+                    {country.name}
+                  </Button>
+                ))}
+            </div>
           </div>
         </div>
       )}
