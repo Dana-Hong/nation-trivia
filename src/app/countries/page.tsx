@@ -6,10 +6,8 @@ export default async function Page() {
   // const sortedCountries = sortCountriesAlphabetic(countries, true);
 
   return (
-    <div className="grow">
-      <div>
-        <CountriesList />
-      </div>
-    </div>
+    <section className="grow">
+      <CountriesList />
+    </section>
   );
 }
