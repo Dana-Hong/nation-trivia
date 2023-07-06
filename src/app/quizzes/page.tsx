@@ -1,20 +1,25 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import FlagIcon from "@/components/icons/flag-fill";
+import FlagsBG from "./flagsbg";
+import CapitalsBG from "./capitalsbg";
 
 export default function Quiz() {
   return (
-    <section className="flex flex-col justify-center grow w-full max-w-[1400px] mx-auto">
-      <div className="flex flex-col justify-center bg-red-600 gap-2 max-w-[70vw] mx-auto">
-        <Link href={"/quizzes/flags"}>
-          <Button className="w-full">
-            <FlagIcon className="mr-2 h-4 w-4 fill-green-600" />
-            Flags
-          </Button>
-        </Link>
-        <Link href={"/quizzes/capitals"}>
-          <Button className="w-full">Capitals</Button>
-        </Link>
+    <section className="mx-auto flex w-full rax-w-[1400px] grow">
+      <div className="mx-auto flex w-full rax-w-7xl grow flex-col md:flex-row md:ry-8 lg:ry-13">
+        <div className="relative flex grow basis-1/2 items-center justify-center cursor-pointer">
+          <FlagsBG />
+          <Link href={"/quizzes/flags"} className="z-10 text-4xl bg-zinc-950 bg-opacity-70 hover:backdrop-blur-md lg:hover:text-7xl transition-all h-full w-full flex items-center justify-center md:text-5xl lg:text-6xl">
+            <h2 className="font-semibold ">Flags</h2>
+          </Link>
+        </div>
+        <div className="relative flex grow basis-1/2 items-center justify-center cursor-pointer">
+          <CapitalsBG />
+          <Link href={"/quizzes/capitals"} className="z-10 text-4xl bg-zinc-950 bg-opacity-70 hover:backdrop-blur-md lg:hover:text-7xl transition-all h-full w-full flex items-center justify-center md:text-5xl lg:text-6xl">
+            <h2 className="font-semibold ">Capitals</h2>
+          </Link>
+        </div>
       </div>
     </section>
   );
