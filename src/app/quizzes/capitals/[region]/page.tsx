@@ -157,14 +157,14 @@ export default function Page({ params }: { params: { region: string } }) {
         </div>
       ) : (
         <div className="flex w-full grow flex-col items-center justify-center gap-8">
-          <div className="lg:pt- w-full max-w-3xl space-y-4 pt-2 md:pt-4">
+          <div className="lg:pt-8 w-full max-w-3xl space-y-4 pt-2 md:pt-4 px-4">
             <p className="text-center text-lg">{`${correctlyGuessed.length}/${totalCountries.current}`}</p>
             <Progress value={progress} className="h-2 w-full" />
           </div>
           <div className="flex grow flex-col gap-12">
             {correctCountry !== null && (
-              <div className="relative mx-auto h-40 w-60 md:h-52 md:w-96">
-                <p className="text-center">
+              <div className="relative mx-auto">
+                <p className="text-center sm:text-lg md:text-2xl lg:text-3xl w-full">
                   What
                   {correctCountry.capital!.length === 1 ? " country is " : " countries are "}
                   {correctCountry.capital!.map((capitalCity, i) => {
