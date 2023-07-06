@@ -79,25 +79,26 @@ export default async function Home() {
   return (
     <>
       <Header />
-      <main className="grow flex flex-col gap-2">
-        <section className="pt-6 pb-8 md:pb-12 md:pt-10 lg:py-32 flex flex-col items-center gap-4 text-center">
-          <h1 className="font-semibold text-3xl sm:text-5xl md:text-6xl lg:text-7xl text-center">
-            Nation Trivia: <span className="block text-2xl sm:text-3xl md:text-4xl lg:text-5xl">
+      <main className="flex grow flex-col gap-2">
+        <section className="flex flex-col items-center gap-4 px-2 pb-8 pt-6 text-center md:pb-12 md:pt-10 lg:py-32">
+          <h1 className="text-center text-3xl font-semibold sm:text-5xl md:text-6xl lg:text-7xl">
+            Nation Trivia{" "}
+            <span className="block text-2xl sm:text-3xl md:text-4xl lg:text-5xl">
               Unravel the World, One Flag at a Time
-              </span>
+            </span>
           </h1>
-          <p className="leading-normal sm:text-lg sm:leading-8 max-w-2xl">
+          <p className="max-w-2xl leading-normal sm:text-lg sm:leading-8">
             Are you ready to test your geography skills? Start your global journey and conquer our
             nation trivia now!
           </p>
-        <div className="flex max-w-[70vw] mx-auto items-center gap-2">
-          <Link className="inline-block" href={"/quizzes"}>
-            <Button className="w-full">Quiz</Button>
-          </Link>
-          <Link className="inline-block" href={"/countries"}>
-            <Button className="w-full truncate">Countries Database</Button>
-          </Link>
-        </div>
+          <div className="mx-auto flex max-w-[70vw] items-center gap-2">
+            <Link className="inline-block" href={"/quizzes"}>
+              <Button className="w-full">Quiz</Button>
+            </Link>
+            <Link className="inline-block" href={"/countries"}>
+              <Button className="w-full truncate">Countries Database</Button>
+            </Link>
+          </div>
           {/* <div className="grow max-w-[1440px]">
             <Image src={Earth} alt="Earth" />
           </div> */}
