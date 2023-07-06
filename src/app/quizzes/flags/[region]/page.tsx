@@ -29,6 +29,7 @@ export default function Page({ params }: { params: { region: string } }) {
   const region = params.region;
 
   function handleClick(quizOptions: QuizOption[], countryName: string) {
+    console.log(countryName);
     const option = quizOptions.filter((option) => option.name === countryName)[0];
     if (option.correctAnswer) {
       setCountries((c) => c.filter((country) => country.name.common !== option.name));
@@ -117,13 +118,13 @@ export default function Page({ params }: { params: { region: string } }) {
             </div>
           </div>
           <p className="border-b pb-2 text-center font-medium">Incorrect Guesses:</p>
-          <ul className="md: grid grid-cols-2 gap-4 sm:grid-cols-3">
+          <ul className="grid sm:grid-cols-2 gap-4 md:grid-cols-3">
             {Array.from(incorrectlyGuessed)
               .filter((country) => country !== undefined)
               .map((country) => (
-                <li key={country.name.common} className="flex flex-col items-center gap-2 md:gap-4">
+                <li key={country.name.common} className="flex flex-col items-center gap-1 border py-2 rounded-md dark:bg-zinc-900">
                   <p className="text-center text-sm font-medium">
-                    {country?.name?.common || "nothing"}
+                    {country.name.common}
                   </p>
                   <div className="relative h-20 w-32 md:h-28 md:w-48">
                     <Image
