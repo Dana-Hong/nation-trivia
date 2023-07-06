@@ -3,6 +3,7 @@ import Image from "next/image";
 import Earth from "../../public/earth-placeholder.jpg";
 import { getAllCountries, getCountriesByRegion } from "./utils";
 import { REGIONS } from "./constants/geography";
+
 // components
 import Header from "../components/header";
 import Footer from "../components/footer";
@@ -57,8 +58,6 @@ type Country = {
   subregion: string;
 };
 
-// type Region = "africa" | "americas" | "asia" | "europe" | "oceania";
-
 export default async function Home() {
   const fetchedRegion = await getCountriesByRegion("EUROPE");
   console.dir(fetchedRegion, { depth: null });
@@ -102,6 +101,24 @@ export default async function Home() {
           {/* <div className="grow max-w-[1440px]">
             <Image src={Earth} alt="Earth" />
           </div> */}
+        </section>
+        <section className="flex flex-col sm:flex-row max-w-screen-2xl mx-auto sm:gap-6 md:gap-10">
+          <div className="max-w-6xl p-8 border rounded-md">
+            <h2 className="text-lg font-semibold sm:text-3xl md:text-4xl pb-6">Explore</h2>
+            <p className="max-w-lg">
+              If curiosity is your compass, then our Explore feature is your map. Dig into our
+              treasure trove of country details. Every fact you uncover is another sparkle on your
+              crown of global knowledge. Your voyage of discovery begins now!
+            </p>
+          </div>
+          <div className="max-w-6xl p-8 border rounded-md">
+            <h2 className="text-lg font-semibold sm:text-3xl md:text-4xl pb-6">Test your Knowledge</h2>
+            <p className="max-w-lg">
+              Igniting the Geo-Gaming Revolution Flag Quiz is not just a game, it&apos;s a thrilling
+              leap into geography. Test your prowess on capital cities, flag identification, or
+              explore an encyclopedia of countries at your fingertips.
+            </p>
+          </div>
         </section>
         {/* <div>{listCountriesByRegion()}</div> */}
         {/* <div>{sortedCountries}</div> */}
