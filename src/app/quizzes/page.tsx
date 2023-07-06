@@ -1,6 +1,4 @@
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import FlagIcon from "@/components/icons/flag-fill";
 import FlagsBG from "./flagsbg";
 import CapitalsBG from "./capitalsbg";
 
