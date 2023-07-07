@@ -1,6 +1,11 @@
 import Link from "next/link";
 import Image from "next/image";
 import Earth from "../../public/earth-placeholder.jpg";
+import Globe1 from "../../public/globe-1.jpg";
+import Globe2 from "../../public/globe-2.jpg";
+import Globe2NoBG from "../../public/globe-2-nobg.png";
+import Compass from "@/components/icons/compass";
+import Book from "@/components/icons/book";
 import { getAllCountries, getCountriesByRegion } from "./utils";
 import { REGIONS } from "./constants/geography";
 
@@ -90,42 +95,44 @@ export default async function Home() {
             Are you ready to test your geography skills? Start your global journey and conquer our
             nation trivia now!
           </p>
-          <div className="mx-auto flex max-w-[70vw] items-center gap-2">
+          {/* <div className="mx-auto flex max-w-[70vw] items-center gap-2">
             <Link className="inline-block" href={"/quizzes"}>
               <Button className="w-full">Quiz</Button>
             </Link>
             <Link className="inline-block" href={"/countries"}>
               <Button className="w-full truncate">Countries Database</Button>
             </Link>
-          </div>
-          {/* <div className="grow max-w-[1440px]">
-            <Image src={Earth} alt="Earth" />
           </div> */}
+          <Image src={Globe2NoBG} alt="globe" height={150} width={225} />
         </section>
-        <section className="flex flex-col sm:flex-row max-w-screen-2xl mx-auto sm:gap-6 md:gap-10">
-          <div className="max-w-6xl p-8 border rounded-md">
-            <h2 className="text-lg font-semibold sm:text-3xl md:text-4xl pb-6">Explore</h2>
+        <section className="mx-auto flex max-w-screen-2xl flex-col gap-4 px-4 pb-8 sm:flex-row sm:gap-6 md:gap-10">
+          <div className="flex max-w-6xl flex-col gap-4 rounded-md border p-8">
+            <div className="flex items-center gap-2">
+              <h2 className="text-lg font-semibold sm:text-3xl md:text-4xl">Explore the World</h2>
+              <Compass className="order-first h-8 w-8 fill-sky-500" />
+            </div>
             <p className="max-w-lg">
               If curiosity is your compass, then our Explore feature is your map. Dig into our
               treasure trove of country details. Every fact you uncover is another sparkle on your
               crown of global knowledge. Your voyage of discovery begins now!
             </p>
+            <Button className="w-fit self-center">Discover Countries</Button>
           </div>
-          <div className="max-w-6xl p-8 border rounded-md">
-            <h2 className="text-lg font-semibold sm:text-3xl md:text-4xl pb-6">Test your Knowledge</h2>
+          <div className="flex max-w-6xl flex-col gap-4 rounded-md border p-8">
+            <div className="flex items-center gap-2">
+              <h2 className="text-lg font-semibold sm:text-3xl md:text-4xl">
+                Challenge your Knowledge
+              </h2>
+              <Book className="order-first h-8 w-8 fill-red-500" />
+            </div>
             <p className="max-w-lg">
               Igniting the Geo-Gaming Revolution Flag Quiz is not just a game, it&apos;s a thrilling
               leap into geography. Test your prowess on capital cities, flag identification, or
               explore an encyclopedia of countries at your fingertips.
             </p>
+            <Button className="w-fit self-center">Quiz Yourself</Button>
           </div>
         </section>
-        {/* <div>{listCountriesByRegion()}</div> */}
-        {/* <div>{sortedCountries}</div> */}
-        {/* <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">{listCountriesByRegion()}L</div> */}
-        {/* <ul className="grid grid-cols-2">{sortedCountries}</ul> */}
-        <p>{/* {data[0].name.official} */}</p>
-        {/* <Image src={`${data[0].flags.svg}`} alt={data[0].flags.alt} width={120} height={120}/> */}
       </main>
       <Footer />
     </>
