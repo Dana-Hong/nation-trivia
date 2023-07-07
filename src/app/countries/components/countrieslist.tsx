@@ -7,6 +7,13 @@ import Link from "next/link";
 // components
 import Filter from "./filter";
 import Sort from "./sort";
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 // constants
 import { REGIONS } from "@/app/constants/geography";
@@ -91,6 +98,31 @@ export default function CountriesList() {
     <div>
       <div className="flex gap-2 justify-around">
         <Filter status={filterStatus} setFilterStatus={setFilterStatus} />
+        <DropdownMenu>
+          <DropdownMenuTrigger>Sort By</DropdownMenuTrigger>
+          <DropdownMenuContent>
+            <DropdownMenuItem
+              onClick={() =>
+                setSortStatus({
+                  currentOption: "ascending",
+                  open: !sortStatus.open,
+                })
+              }
+            >
+              {"Alphabetical (ascending)"}
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={() =>
+                setSortStatus({
+                  currentOption: "descending",
+                  open: !sortStatus.open,
+                })
+              }
+            >
+              {"Alphabetical (descending)"}
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
         <Sort status={sortStatus} setSortStatus={setSortStatus} />
       </div>
       <div className="px-4">{regionLists}</div>
