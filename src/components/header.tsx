@@ -17,26 +17,28 @@ export default function Header() {
 
   return (
     <header className="relative z-50 flex items-center justify-between border-b px-2 py-1">
-      <Link href={"/"}>
-        <Button variant={"link"} className="gap-2">
-          <EarthLogo className="h-6 w-6" />
-          <span className="text-base font-bold">Nation Trivia</span>
-        </Button>
-      </Link>
-      <button className="sm:hidden" onClick={handleClick}>
-        <BurgerMenu className="h-6 w-6" />
-      </button>
-      <nav className="hidden gap-4 sm:flex">
-        <Link href={"/countries"}>
-          <Button variant="link">Countries Database</Button>
+      <div className="mx-auto flex justify-between w-full max-w-screen-2xl">
+        <Link href={"/"}>
+          <Button variant={"link"} className="gap-2">
+            <EarthLogo className="h-6 w-6" />
+            <span className="text-base font-bold">Nation Trivia</span>
+          </Button>
         </Link>
-        <Link href={"/quizzes"}>
-          <Button variant="link">Quizzes</Button>
-        </Link>
-        <Link href={"/scores"}>
-          <Button variant="link">Scores</Button>
-        </Link>
-      </nav>
+        <button className="sm:hidden" onClick={handleClick}>
+          <BurgerMenu className="h-6 w-6" />
+        </button>
+        <nav className="hidden gap-4 sm:flex">
+          <Link href={"/countries"}>
+            <Button variant="link">Countries Database</Button>
+          </Link>
+          <Link href={"/quizzes"}>
+            <Button variant="link">Quizzes</Button>
+          </Link>
+          <Link href={"/scores"}>
+            <Button variant="link">Scores</Button>
+          </Link>
+        </nav>
+      </div>
       <nav
         className={`${
           !open ? "-translate-x-full" : "-translate-x-0"

@@ -103,34 +103,46 @@ export default async function Home() {
               <Button className="w-full truncate">Countries Database</Button>
             </Link>
           </div> */}
-          <Image src={Globe2NoBG} alt="globe" height={150} width={225} />
+          <Image src={Globe2NoBG} alt="globe" priority />
         </section>
-        <section className="mx-auto flex max-w-screen-2xl flex-col gap-4 px-4 pb-8 sm:flex-row sm:gap-6 md:gap-10">
-          <div className="flex max-w-6xl flex-col gap-4 rounded-md border p-8">
-            <div className="flex items-center gap-2">
-              <h2 className="text-lg font-semibold sm:text-3xl md:text-4xl">Explore the World</h2>
+        <section className="mx-auto flex max-w-screen-2xl flex-col gap-4 px-8 pb-8 sm:flex-row sm:gap-6 md:gap-10 md:pb-12 lg:pb-32">
+          <div className="flex max-w-md flex-col justify-between gap-2 rounded-md border px-6 py-7 hover:bg-zinc-900">
+            <div className="flex items-center gap-4">
+              <h2 className="text-lg font-semibold sm:text-xl md:text-2xl">Explore the World</h2>
               <Compass className="order-first h-8 w-8 fill-sky-500" />
             </div>
-            <p className="max-w-lg">
+            <p className="max-w-lg text-sm md:text-base">
               If curiosity is your compass, then our Explore feature is your map. Dig into our
               treasure trove of country details. Every fact you uncover is another sparkle on your
               crown of global knowledge. Your voyage of discovery begins now!
             </p>
-            <Button className="w-fit self-center">Discover Countries</Button>
+            <Button className="w-fit self-center p-0">
+              <Link
+                href={"/countries"}
+                className="flex h-full w-full items-center justify-center rounded-md px-3 py-2"
+              >
+                <span>Discover Countries</span>
+              </Link>
+            </Button>
           </div>
-          <div className="flex max-w-6xl flex-col gap-4 rounded-md border p-8">
-            <div className="flex items-center gap-2">
-              <h2 className="text-lg font-semibold sm:text-3xl md:text-4xl">
-                Challenge your Knowledge
-              </h2>
+          <div className="flex max-w-md flex-col justify-between gap-6 rounded-md border p-8 hover:bg-zinc-900">
+            <div className="flex items-center gap-4">
+              <h2 className="text-lg font-semibold sm:text-xl md:text-2xl">Test your Knowledge</h2>
               <Book className="order-first h-8 w-8 fill-red-500" />
             </div>
-            <p className="max-w-lg">
+            <p className="max-w-lg text-sm md:text-base">
               Igniting the Geo-Gaming Revolution Flag Quiz is not just a game, it&apos;s a thrilling
               leap into geography. Test your prowess on capital cities, flag identification, or
               explore an encyclopedia of countries at your fingertips.
             </p>
-            <Button className="w-fit self-center">Quiz Yourself</Button>
+            <Button className="w-fit self-center p-0">
+              <Link
+                href={"/quizzese"}
+                className="flex h-full w-full items-center justify-center rounded-md px-3 py-2"
+              >
+                <span>Try out Quizzes</span>
+              </Link>
+            </Button>
           </div>
         </section>
       </main>
