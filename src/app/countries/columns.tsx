@@ -1,8 +1,11 @@
 "use client";
 
-import { Country } from "../types";
+import { Country, Currency } from "../types";
 
 import { ColumnDef } from "@tanstack/react-table";
+import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
+import { ArrowUpDown, MoreHorizontal, SortDesc } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export const columns: ColumnDef<Country>[] = [
   {
@@ -10,24 +13,131 @@ export const columns: ColumnDef<Country>[] = [
     header: "Flag",
   },
   {
-    accessorKey: "name.common",
-    header: "Country",
+    accessorKey: "name",
+    sortDescFirst: false,
+    header: ({ column }) => {
+      return (
+        <span className="flex cursor-pointer hover:text-zinc-100" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+          Country
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </span>
+      );
+    },
+    cell: ({ row }) => {
+      const rowData: { common: string; } = row.getValue("name");
+      return (
+        <span>{rowData.common}</span>
+      )
+    },
   },
   {
     accessorKey: "capital",
-    header: "Capital(s)",
+    header: ({ column }) => {
+      return (
+        <span className="flex cursor-pointer hover:text-zinc-100" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+          Capital Cities
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </span>
+      );
+    },
+    cell: ({ row }) => {
+      const capitals: string[] = row.getValue("capital");
+      if (!capitals) return "N/A";
+      return capitals.map((capital, i) => (
+        <span key={capital}>{`${i !== 0 ? ", " : ""}${capital}`}</span>
+      ));
+    },
   },
   {
     accessorKey: "continents",
-    header: "Continent(s)",
+    header: ({ column }) => {
+      return (
+        <span className="flex cursor-pointer hover:text-zinc-100" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+          Continent
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </span>
+      );
+    },
   },
   {
-    accessorFn: (currencies) => {},
+    accessorKey: "currencies",
     header: "Currencies",
+    // header: ({ column }) => {
+    //   return (
+    //     <span className="flex cursor-pointer hover:text-zinc-100" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+    //       Currencies
+    //       <ArrowUpDown className="ml-2 h-4 w-4" />
+    //     </span>
+    //   );
+    // },
+    cell: ({ row }) => {
+      const rowData = row.getValue("currencies") ?? {};
+      const currencyData = Object.entries(rowData as Currency);
+      if (currencyData.length === 0) return "N/A";
+      return currencyData.map((currency, i) => {
+        const [code, details] = currency;
+        const { name, symbol } = details;
+        return (
+          <span key={name}>
+            {i !== 0 ? ", " : ""}
+            <HoverCard>
+              <HoverCardTrigger className="cursor-pointer font-medium">{code}</HoverCardTrigger>
+              <HoverCardContent className="w-fit">{`${name} (${symbol})`}</HoverCardContent>
+            </HoverCard>
+          </span>
+        );
+      });
+    },
+  },
+  {
+    accessorKey: "languages",
+    header: "Languages",
+    // header: ({ column }) => {
+    //   return (
+    //     <span className="flex cursor-pointer hover:text-zinc-100" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+    //       Languages
+    //       <ArrowUpDown className="ml-2 h-4 w-4" />
+    //     </span>
+    //   );
+    // },
+    cell: ({ row }) => {
+      const rowData = row.getValue("languages");
+      if (!rowData) return "N/A"; 
+      const langauges = Object.values(rowData as { [key: string]: string });
+      return langauges.map((lang, i) => {
+        return (
+          <span key={lang}>
+            {i !== 0 ? ", " : ""}
+            {lang}
+          </span>
+        )
+      })
+    },
   },
   {
     accessorKey: "population",
-    header: "Population",
+    header: ({ column }) => {
+      return (
+        <span className="flex cursor-pointer hover:text-zinc-100" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+          Population
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </span>
+      );
+    },
+    cell: ({ row }) => {
+      const population: number = row.getValue("population");
+      const populationString = population.toString().split("");
+      const populationArray = populationString
+        .reverse()
+        .map((decimal, i) =>
+          (i !== 0 || i === populationString.length - 1) && (i - 2) % 3 === 0
+            ? `,${decimal}`
+            : decimal
+        )
+        .reverse();
+      if (populationArray[0].length === 2) populationArray[0] = populationArray[0][1];
+      return populationArray.join("");
+    },
   },
 ];
 //  {
