@@ -14,38 +14,38 @@ import Header from "../components/header";
 import Footer from "../components/footer";
 import { Button } from "@/components/ui/button";
 
-async function listCountriesByRegion() {
-  const regions = REGIONS;
-  const regionData = await Promise.all(
-    regions.map(
-      async (region) =>
-        await getCountriesByRegion(region).then((countries) =>
-          sortCountriesAlphabetic(countries, true)
-        )
-    )
-  );
+// async function listCountriesByRegion() {
+//   const regions = REGIONS;
+//   const regionData = await Promise.all(
+//     regions.map(
+//       async (region) =>
+//         await getCountriesByRegion(region).then((countries) =>
+//           sortCountriesAlphabetic(countries, true)
+//         )
+//     )
+//   );
 
-  return regionData.map((region, i) => (
-    <div key={region[i].region}>
-      <p className="text-3xl">{region[i].region}</p>
-      <ul>
-        {region.map((country: Country) => (
-          <li key={country.name.common}>
-            <p>{country.name.common}</p>
-            <p>{country.cca3}</p>
-          </li>
-        ))}
-      </ul>
-    </div>
-  ));
-}
+//   return regionData.map((region, i) => (
+//     <div key={region[i].region}>
+//       <p className="text-3xl">{region[i].region}</p>
+//       <ul>
+//         {region.map((country: Country) => (
+//           <li key={country.name.common}>
+//             <p>{country.name.common}</p>
+//             <p>{country.cca3}</p>
+//           </li>
+//         ))}
+//       </ul>
+//     </div>
+//   ));
+// }
 
-function sortCountriesAlphabetic(countriesList: Country[], ascending: boolean) {
-  return countriesList.sort((a: Country, b: Country) => {
-    if (ascending) return a.name.common.localeCompare(b.name.common);
-    return b.name.common.localeCompare(a.name.common);
-  });
-}
+// function sortCountriesAlphabetic(countriesList: Country[], ascending: boolean) {
+//   return countriesList.sort((a: Country, b: Country) => {
+//     if (ascending) return a.name.common.localeCompare(b.name.common);
+//     return b.name.common.localeCompare(a.name.common);
+//   });
+// }
 
 type Flags = {
   png: string;
@@ -64,21 +64,21 @@ type Country = {
 };
 
 export default async function Home() {
-  const fetchedRegion = await getCountriesByRegion("EUROPE");
-  console.dir(fetchedRegion, { depth: null });
-  const data = await getAllCountries();
+  // const fetchedRegion = await getCountriesByRegion("EUROPE");
+  // console.dir(fetchedRegion, { depth: null });
+  // const data = await getAllCountries();
 
-  const sortedCountries = sortCountriesAlphabetic(fetchedRegion, true).map((country: Country) => (
-    <li key={country.name.common}>
-      <p>{country.name.common}</p>
-      <Image
-        src={country.flags.svg}
-        alt={country.flags.alt ?? `${country.name.common} flag`}
-        width={200}
-        height={120}
-      />
-    </li>
-  ));
+  // const sortedCountries = sortCountriesAlphabetic(fetchedRegion, true).map((country: Country) => (
+  //   <li key={country.name.common}>
+  //     <p>{country.name.common}</p>
+  //     <Image
+  //       src={country.flags.svg}
+  //       alt={country.flags.alt ?? `${country.name.common} flag`}
+  //       width={200}
+  //       height={120}
+  //     />
+  //   </li>
+  // ));
 
   return (
     <>

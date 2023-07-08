@@ -1,3 +1,9 @@
+export type Currency = {
+  [key: string]: {
+    name: string;
+    symbol: string;
+  }
+}
 export type Country = {
   name: {
     common: string;
@@ -6,6 +12,8 @@ export type Country = {
   flags: Flags;
   region: string;
   subregion: string;
+  currencies: Currency;
+  population: number;
 };
 
 export type Flags = {
