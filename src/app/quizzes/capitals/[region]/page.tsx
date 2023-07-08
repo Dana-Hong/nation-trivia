@@ -68,13 +68,9 @@ export default function Page({ params }: { params: { region: string } }) {
   }
 
   useEffect(() => {
-    console.log(incorrectlyGuessed);
-  })
-
-  useEffect(() => {
     (async () => {
       const countriesList =
-        region === "all" ? await getAllCountries() : await getCountriesByRegion(region as Region);
+        region === "all" ? await getAllCountries().then(data => data.filter((country: Country) => country.capital)) : await getCountriesByRegion(region as Region);
       setCountries(countriesList);
       if (totalCountries.current < countriesList.length)
         totalCountries.current = countriesList.length;

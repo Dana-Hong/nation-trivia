@@ -34,9 +34,9 @@ export default function Header() {
           <Link href={"/quizzes"}>
             <Button variant="link">Quizzes</Button>
           </Link>
-          <Link href={"/scores"}>
+          {/* <Link href={"/scores"}>
             <Button variant="link">Scores</Button>
-          </Link>
+          </Link> */}
         </nav>
       </div>
       <nav
@@ -62,9 +62,9 @@ export default function Header() {
           <Link href={"/quizzes"} className="text-base text-zinc-200" onClick={handleClick}>
             Quizzes
           </Link>
-          <Link href={"/scores"} className="text-base text-zinc-200">
+          {/* <Link href={"/scores"} className="text-base text-zinc-200">
             Scores
-          </Link>
+          </Link> */}
         </div>
         <div
           className={`grow ${

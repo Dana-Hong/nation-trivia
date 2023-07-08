@@ -5,13 +5,14 @@ import { Country, Currency } from "../types";
 import { ColumnDef } from "@tanstack/react-table";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
 import { ArrowUpDown, MoreHorizontal, SortDesc } from "lucide-react";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
 export const columns: ColumnDef<Country>[] = [
-  {
-    accessorKey: "flag",
-    header: "Flag",
-  },
+  // {
+  //   accessorKey: "flag",
+  //   header: "Flag",
+  // },
   {
     accessorKey: "name",
     sortDescFirst: false,
@@ -26,7 +27,9 @@ export const columns: ColumnDef<Country>[] = [
     cell: ({ row }) => {
       const rowData: { common: string; } = row.getValue("name");
       return (
-        <span>{rowData.common}</span>
+        <Link href={`/countries/${rowData.common}`}>
+        {rowData.common}
+        </Link>
       )
     },
   },

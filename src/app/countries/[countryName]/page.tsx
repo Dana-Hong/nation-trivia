@@ -10,36 +10,42 @@ type Currency = {
 
 type Languages = {};
 
-export default async function Page({
-  params,
-}: {
-  params: { countryName: string };
-}) {
+export default async function Page({ params }: { params: { countryName: string } }) {
   const countryName = params.countryName.split("-").join(" ");
   const [country] = await getCountryByName(countryName);
   const currencies: Currency[] = Object.values(country.currencies);
   const languages: string[] = Object.values(country.languages);
-  console.log(country)
+  console.log(country);
   const borderCountryCodes: string[] | null =
-  country?.borders !== undefined ? Object.values(country.borders) : null;
+    country?.borders !== undefined ? Object.values(country.borders) : null;
 
   const borderCountries: string[] | null = borderCountryCodes
     ? await Promise.all(
         borderCountryCodes.map(
           async (countryCode) =>
-            await getCountryByCode(countryCode).then(
-              (country) => country[0].name.common
-            )
+            await getCountryByCode(countryCode).then((country) => country[0].name.common)
         )
       )
     : null;
 
+  function formatPopulation(population: number) {
+    const populationString = population.toString().split("");
+    const populationArray = populationString
+      .reverse()
+      .map((decimal, i) =>
+        (i !== 0 || i === populationString.length - 1) && (i - 2) % 3 === 0
+          ? `,${decimal}`
+          : decimal
+      )
+      .reverse();
+    if (populationArray[0].length === 2) populationArray[0] = populationArray[0][1];
+    return populationArray.join("");
+  }
+
   return (
-    <main className="bg-red-300 grow flex flex-col gap-4">
-      <section className="flex flex-col items-center w-[80%] mx-auto">
-        <h1 className="text-center text-2xl font-semibold">
-          {country.name.common}
-        </h1>
+    <main className="flex grow flex-col gap-4">
+      <section className="mx-auto flex w-full max-w-screen-2xl flex-col items-center bg-sky-500">
+        <h1 className="text-center text-2xl font-semibold">{country.name.common}</h1>
         <div className="relative h-40 w-80">
           <Image
             src={country.flags.png}
@@ -49,14 +55,14 @@ export default async function Page({
           />
         </div>
       </section>
-      <section className="bg-green-200 mx-auto w-[80%]">
+      <section className="mx-auto w-full max-w-screen-2xl bg-green-200 ">
         <div className="flex gap-2">
           <p className="font-semibold">Capital City:</p>
           <p>{`${country.capital}`}</p>
         </div>
         <div className="flex gap-2">
           <p className="font-semibold">Population:</p>
-          <p>{country.population}</p>
+          <p>{formatPopulation(country.population)}</p>
         </div>
         <div className="flex gap-2">
           <p className="font-semibold">Languages: </p>
@@ -85,9 +91,7 @@ export default async function Page({
             {borderCountries &&
               borderCountries.map((borderingCountry: string) => (
                 <span key={borderingCountry} className="inline-block">
-                  <Link href={`/countries/${borderingCountry}`}>
-                    {borderingCountry}
-                  </Link>
+                  <Link href={`/countries/${borderingCountry}`}>{borderingCountry}</Link>
                 </span>
               ))}
           </div>

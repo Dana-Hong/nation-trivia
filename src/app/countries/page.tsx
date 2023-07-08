@@ -1,9 +1,9 @@
 import { DataTable } from "./data-table";
 import { columns } from "./columns";
-import { getAllCountries } from "../utils";
+import { getAllCountries, sortCountriesAlphabetic } from "../utils";
 
 export default async function Page() {
-  const data = await getAllCountries();
+  const data = await getAllCountries().then(countries => sortCountriesAlphabetic(countries, true));
 
   return (
     <section className="grow py-20">

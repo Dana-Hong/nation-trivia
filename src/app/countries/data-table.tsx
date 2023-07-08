@@ -47,17 +47,17 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
   });
 
   return (
-    <div className="max-w-screen-2xl mx-auto">
-      {/* <div className="flex items-center py-4">
-        <Input
-          placeholder="Filter continents..."
-          value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
-          onChange={(event) => {
-            console.log(event.target.value);
-            table.getColumn("name")?.setFilterValue(event.target.value)}}
-          className="max-w-sm"
-        />
-      </div> */}
+    <div className="flex flex-col gap-4">
+      {/* <Input
+        placeholder="Filter continents..."
+        value={(table.getColumn("capital")?.getFilterValue() as string) ?? ""}
+        onChange={(event) => {
+          console.log();
+          console.log(event.target.value);
+          table.getColumn("capital")?.setFilterValue(event.target.value);
+        }}
+        className="max-w-sm"
+      /> */}
 
       <div className="rounded-md border">
         <Table>
