@@ -1,13 +1,12 @@
 "use client";
 
 import { Fragment, useState, useEffect } from "react";
-import { DropdownMenuCheckboxItemProps } from "@radix-ui/react-dropdown-menu";
 import Link from "next/link";
 
 // components
 import Filter from "./filter";
 import Sort from "./sort";
-import { Button } from "@/components/ui/button";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -34,8 +33,6 @@ export type FilterState = {
   checked: Region[];
 };
 
-type Checked = DropdownMenuCheckboxItemProps["checked"];
-
 export default function CountriesList() {
   const [filterStatus, setFilterStatus] = useState<FilterState>({
     open: false,
@@ -47,14 +44,9 @@ export default function CountriesList() {
     currentOption: "ascending",
   });
 
-  const [selectedRegions, setSelectedRegions] = useState<Country[][] | null>(
-    null
-  );
+  const [selectedRegions, setSelectedRegions] = useState<Country[][] | null>(null);
 
-  async function getFilteredRegions(
-    filterStatus: FilterState,
-    sortStatus: SortStatusState
-  ) {
+  async function getFilteredRegions(filterStatus: FilterState, sortStatus: SortStatusState) {
     const ascending = sortStatus.currentOption === "Alphabetical - Ascending";
     const selectedRegions = filterStatus.checked;
 
@@ -70,17 +62,14 @@ export default function CountriesList() {
 
   useEffect(() => {
     (async () => {
-      const filteredRegions = await getFilteredRegions(
-        filterStatus,
-        sortStatus
-      );
+      const filteredRegions = await getFilteredRegions(filterStatus, sortStatus);
       setSelectedRegions(filteredRegions);
     })();
   }, [filterStatus, sortStatus]);
 
   const regionLists = selectedRegions?.map((region, i) => (
     <Fragment key={region[0].region}>
-      <h3 className="text-3xl text-center">{region[i].region}</h3>
+      <h3 className="text-center text-3xl">{region[i].region}</h3>
       <ul>
         {region.map((country) => {
           const countryName = country.name.common.split(" ").join("-");
@@ -96,7 +85,7 @@ export default function CountriesList() {
 
   return (
     <div>
-      <div className="flex gap-2 justify-around">
+      <div className="flex justify-around gap-2">
         <Filter status={filterStatus} setFilterStatus={setFilterStatus} />
         <DropdownMenu>
           <DropdownMenuTrigger>Sort By</DropdownMenuTrigger>
