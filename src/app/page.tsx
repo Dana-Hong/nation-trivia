@@ -137,7 +137,7 @@ export default async function Home() {
             </p>
             <Button className="w-fit self-center p-0">
               <Link
-                href={"/quizzese"}
+                href={"/quizzes"}
                 className="flex h-full w-full items-center justify-center rounded-md px-3 py-2"
               >
                 <span>Try out Quizzes</span>

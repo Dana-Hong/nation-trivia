@@ -8,7 +8,7 @@ export default function Page({}) {
       <h1 className="pt-12 text-center text-3xl font-medium underline underline-offset-4 sm:text-4xl">
         World Flags
       </h1>
-      <div className="rg-green-300 mx-auto grid w-full max-w-xl gap-2 pt-8 sm:grid-cols-2 sm:gap-6">
+      <div className="mx-auto grid w-full px-4 max-w-xl gap-2 pt-8 sm:grid-cols-2 sm:gap-6">
         {REGIONS.map((region) => (
           <div
             key={region}

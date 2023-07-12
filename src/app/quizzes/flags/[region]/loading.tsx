@@ -12,14 +12,15 @@ export default function Loading() {
           <Skeleton className="h-3 w-6" />
           <Skeleton className="h-2 w-full" />
         </div>
-        <div className="flex grow flex-col gap-12">
-          <div className="grid w-full max-w-lg grid-cols-2 gap-3 px-4 pt-8">
-            <Skeleton className="h-12 w-40" />
-            <Skeleton className="h-12 w-40" />
-            <Skeleton className="h-12 w-40" />
-            <Skeleton className="h-12 w-40" />
-            <Skeleton className="h-12 w-40" />
-            <Skeleton className="h-12 w-40" />
+        <div className="flex grow flex-col items-center">
+          <Skeleton className="h-40 w-60 md:h-52 md:w-96" />
+          <div className="grid w-full grid-cols-2 gap-3 px-4 pt-8">
+            <Skeleton className="h-12 w-32" />
+            <Skeleton className="h-12 w-32" />
+            <Skeleton className="h-12 w-32" />
+            <Skeleton className="h-12 w-32" />
+            <Skeleton className="h-12 w-32" />
+            <Skeleton className="h-12 w-32" />
           </div>
         </div>
       </div>
