@@ -1,9 +1,11 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import BurgerMenu from "./icons/burger-menu";
 import Link from "next/link";
+import EarthNoBG from "../../public/globe-2-nobg.png";
 
 import EarthLogo from "./icons/earth-logo";
 import Close from "./icons/close";
@@ -17,10 +19,10 @@ export default function Header() {
 
   return (
     <header className="relative z-50 flex items-center justify-between border-b px-2 py-1">
-      <div className="mx-auto flex justify-between w-full max-w-screen-2xl">
+      <div className="mx-auto flex w-full max-w-screen-2xl justify-between">
         <Link href={"/"}>
           <Button variant={"link"} className="gap-2">
-            <EarthLogo className="h-6 w-6" />
+            <Image src={EarthNoBG} height={25} width={25} alt="Earth logo" />
             <span className="text-base font-bold">Nation Trivia</span>
           </Button>
         </Link>
@@ -34,9 +36,6 @@ export default function Header() {
           <Link href={"/quizzes"}>
             <Button variant="link">Quizzes</Button>
           </Link>
-          {/* <Link href={"/scores"}>
-            <Button variant="link">Scores</Button>
-          </Link> */}
         </nav>
       </div>
       <nav
@@ -62,9 +61,6 @@ export default function Header() {
           <Link href={"/quizzes"} className="text-base text-zinc-200" onClick={handleClick}>
             Quizzes
           </Link>
-          {/* <Link href={"/scores"} className="text-base text-zinc-200">
-            Scores
-          </Link> */}
         </div>
         <div
           className={`grow ${
