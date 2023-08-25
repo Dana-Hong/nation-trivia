@@ -1,4 +1,9 @@
-import { sortCountries, sortCountriesAlphabetic, filterCountriesByContinent } from "@/app/utils";
+import {
+  searchCountryByName,
+  sortCountries,
+  sortCountriesAlphabetic,
+  filterCountriesByContinent,
+} from "@/app/utils";
 import { Country } from "@/app/types";
 
 const mockCountries = [
@@ -65,6 +70,19 @@ describe("sortCountries", () => {
           common: "Argentina",
         },
         continents: ["South America"],
+      },
+    ]);
+  });
+});
+
+describe("search country by name", () => {
+  it("returns a list of countries that match the input", () => {
+    expect(searchCountryByName(mockCountries as Country[], "Zimba")).toStrictEqual([
+      {
+        name: {
+          common: "Zimbabwe",
+        },
+        continents: ["Africa"],
       },
     ]);
   });
