@@ -1,13 +1,12 @@
 "use client";
-import { useState, isValidElement, ReactNode, cloneElement, ReactElement } from "react";
-import { DropdownMenuCheckboxItemProps } from "@radix-ui/react-dropdown-menu";
-import { ChevronDown } from "lucide-react";
-import { Input } from "@/components/ui/input";
-import { Country } from "../types";
-import { filterCountriesByContinent, sortCountries, sortCountriesAlphabetic } from "../utils";
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
+import { Country } from "../types";
+import { searchCountryByName, filterCountriesByContinent, sortCountries } from "../utils";
+
+import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -16,15 +15,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-
-type Checked = DropdownMenuCheckboxItemProps["checked"];
+import { ChevronDown } from "lucide-react";
 
 type CountryProps = {
   data: any;
@@ -116,9 +107,9 @@ export default function CountriesList({ data }: CountryProps) {
 
   const filteredCountries = filterCountriesByContinent(data, filteredContinents);
   const sortedCountries = sortCountries(filteredCountries, sortStatus);
-  console.log(sortedCountries);
+  const searchedCountries = searchCountryByName(sortedCountries as Country[], search);
 
-  const countriesList = sortedCountries!.map((country) => {
+  const countriesList = searchedCountries!.map((country) => {
     return (
       <Link
         href={`/countries/${country.name.common}`}
