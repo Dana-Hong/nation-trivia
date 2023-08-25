@@ -59,6 +59,16 @@ export async function getCountriesByCapital(capital: string) {
   return data;
 }
 
+export function searchCountryByName(countriesList: Country[], name: string) {
+  const sanitizedInput = name.toLocaleLowerCase();
+  const searchResult = countriesList.filter((country) => {
+    const countryName = country.name.common.toLocaleLowerCase().slice(0, sanitizedInput.length);
+    return sanitizedInput === countryName;
+  });
+
+  return searchResult;
+}
+
 export function sortCountries(countriesList: Country[], sortValue: string) {
   if (sortValue === "nameAsc") {
     return sortCountriesAlphabetic(countriesList, true);
