@@ -2,12 +2,11 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
+
 import { Button } from "@/components/ui/button";
 import BurgerMenu from "./icons/burger-menu";
-import Link from "next/link";
 import EarthNoBG from "../../public/globe-2-nobg.png";
-
-import EarthLogo from "./icons/earth-logo";
 import Close from "./icons/close";
 
 export default function Header() {
@@ -32,7 +31,7 @@ export default function Header() {
         <nav className="hidden gap-4 sm:flex">
           <ul>
             <Link href={"/countries"}>
-              <Button variant="link">Countries Database</Button>
+              <Button variant="link">Explore Countries</Button>
             </Link>
             <Link href={"/quizzes"}>
               <Button variant="link">Quizzes</Button>
@@ -47,7 +46,7 @@ export default function Header() {
       >
         <div className="flex h-full w-3/4 max-w-lg flex-col gap-2 bg-zinc-950 px-8 pt-8">
           <div className="flex justify-between border-b">
-            <Button asChild variant="link" className="gap-2">
+            <Button asChild variant="link" className="gap-2 px-0 min-[380px]:px-4">
               <Link href={"/"} className="flex items-center gap-2 py-2">
                 <Image src={EarthNoBG} height={25} width={25} alt="Earth logo" />
                 <span className="block text-base font-semibold text-zinc-200">Nation Trivia</span>
@@ -58,7 +57,7 @@ export default function Header() {
             </Button>
           </div>
           <Link href={"/countries"} className="text-base text-zinc-200" onClick={handleClick}>
-            Countries Database
+            Explore Countries
           </Link>
           <Link href={"/quizzes"} className="text-base text-zinc-200" onClick={handleClick}>
             Quizzes
