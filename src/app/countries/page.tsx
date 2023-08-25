@@ -1,16 +1,16 @@
-import { DataTable } from "./data-table";
-import { columns } from "./columns";
-import { getAllCountries, sortCountriesAlphabetic } from "../utils";
+import { getAllCountries } from "../utils";
+
+import CountriesList from "./countries-list";
 
 export default async function Page() {
-  const data = await getAllCountries().then((countries) =>
-    sortCountriesAlphabetic(countries, true)
-  );
+  const countries = await getAllCountries();
 
   return (
-    <section className="mx-auto max-w-screen-2xl grow py-20 pb-8">
-      <h1 className="pb-8 text-lg font-medium sm:text-2xl md:text-3xl">Countries</h1>
-      <DataTable columns={columns} data={data} />
+    <section className="w-full pb-20">
+      <h1 className="w-full px-4 py-8 text-2xl font-medium sm:px-6 sm:text-3xl md:text-4xl">
+        Explore Countries
+      </h1>
+      <CountriesList data={countries} />
     </section>
   );
 }
