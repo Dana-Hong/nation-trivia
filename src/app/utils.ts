@@ -42,7 +42,7 @@ export async function getCountriesByRegion(region: Region, noCache?: boolean) {
     ? await fetch(`${REST_COUNTRIES_URL}/region/${formattedRegion}`, { next: { revalidate: 0 } })
     : await fetch(`${REST_COUNTRIES_URL}/region/${formattedRegion}`);
   if (!response.ok) {
-    throw new Error(`Failed to fetch countries in ${region}`);
+    throw new Error(`Failed to fetch countries in the region of ${region}`);
   }
 
   const data = response.json();
