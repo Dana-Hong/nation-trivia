@@ -116,8 +116,8 @@ export default function CountriesList({ data }: CountryProps) {
         key={country.name.common}
         className="relative flex cursor-pointer flex-col rounded-md bg-zinc-800 transition-transform hover:scale-105"
       >
-        <div className="p-6 text-sm">
-          <p className="max-w-[252px] text-lg font-bold">{country.name.common}</p>
+        <div className="p-6 pt-3 text-sm">
+          <p className="max-w-[252px] pb-2 text-2xl font-bold">{country.name.common}</p>
           <p>
             <span className="text-base font-semibold">Population: </span>
             {country.population}
