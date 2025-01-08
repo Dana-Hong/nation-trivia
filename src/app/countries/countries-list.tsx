@@ -105,6 +105,18 @@ export default function CountriesList({ data }: CountryProps) {
     setSortStatus(name);
   }
 
+  function formatPopulation(population: number) {
+    // return population.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    if (population >= 1_000 && population <= 1_000_000) {
+      return `${Math.round(population / 1_000)}K`;
+    } else if (population >= 1_000_000 && population <= 1_000_000_000) {
+      return `${Math.round(population / 1_000_000)}M`;
+    } else if (population >= 1_000_000_000 && population <= 1_000_000_000_000) {
+      return `${Math.round(population / 1_000_000_000)}B`;
+    }
+    // return population.toLocaleString();
+  }
+
   const filteredCountries = filterCountriesByContinent(data, filteredContinents);
   const sortedCountries = sortCountries(filteredCountries, sortStatus);
   const searchedCountries = searchCountryByName(sortedCountries as Country[], search);
@@ -120,7 +132,7 @@ export default function CountriesList({ data }: CountryProps) {
           <p className="max-w-[252px] pb-2 text-2xl font-bold">{country.name.common}</p>
           <p>
             <span className="text-base font-semibold">Population: </span>
-            {country.population}
+            {formatPopulation(country.population)}
           </p>
           <p>
             <span className="text-base font-semibold">Region: </span>
