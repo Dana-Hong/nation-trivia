@@ -15,6 +15,7 @@
     "@radix-ui/react-progress": "^1.0.3",
     "@radix-ui/react-select": "^1.2.2",
     "@radix-ui/react-slot": "^1.0.2",
+    "@radix-ui/react-tooltip": "^1.1.6",
     "@tanstack/react-table": "^8.9.3",
     "@types/node": "20.2.5",
     "@types/react": "18.2.8",

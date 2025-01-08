@@ -14,6 +14,7 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 import { ChevronDown } from "lucide-react";
 
@@ -132,7 +133,14 @@ export default function CountriesList({ data }: CountryProps) {
           <p className="max-w-[252px] pb-2 text-2xl font-bold">{country.name.common}</p>
           <p>
             <span className="text-base font-semibold">Population: </span>
-            {formatPopulation(country.population)}
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger>{formatPopulation(country.population)}</TooltipTrigger>
+                <TooltipContent>
+                  <p>{country.population.toLocaleString()}</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           </p>
           <p>
             <span className="text-base font-semibold">Region: </span>
@@ -146,7 +154,7 @@ export default function CountriesList({ data }: CountryProps) {
         <Image
           src={country.flags.png}
           alt={country.flags.alt ?? `${country.name.common} flag`}
-          className="order-first rounded-t-md"
+          className="order-first aspect-[4/3] rounded-t-md bg-zinc-900 object-contain"
           height={200}
           width={300}
         />
