@@ -14,6 +14,7 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 import { ChevronDown } from "lucide-react";
 
@@ -105,6 +106,18 @@ export default function CountriesList({ data }: CountryProps) {
     setSortStatus(name);
   }
 
+  function formatPopulation(population: number) {
+    // return population.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    if (population >= 1_000 && population <= 1_000_000) {
+      return `${Math.round(population / 1_000)}K`;
+    } else if (population >= 1_000_000 && population <= 1_000_000_000) {
+      return `${Math.round(population / 1_000_000)}M`;
+    } else if (population >= 1_000_000_000 && population <= 1_000_000_000_000) {
+      return `${Math.round(population / 1_000_000_000)}B`;
+    }
+    // return population.toLocaleString();
+  }
+
   const filteredCountries = filterCountriesByContinent(data, filteredContinents);
   const sortedCountries = sortCountries(filteredCountries, sortStatus);
   const searchedCountries = searchCountryByName(sortedCountries as Country[], search);
@@ -114,28 +127,37 @@ export default function CountriesList({ data }: CountryProps) {
       <Link
         href={`/countries/${country.name.common}`}
         key={country.name.common}
-        className="relative flex cursor-pointer flex-col rounded-md bg-zinc-800 transition-transform hover:scale-105"
+        className="flex w-full cursor-pointer flex-col rounded-md bg-zinc-800 transition-transform hover:scale-105"
       >
         <div className="p-6 pt-3 text-sm">
-          <p className="max-w-[252px] pb-2 text-2xl font-bold">{country.name.common}</p>
+          <p className="pb-2 text-2xl font-bold">{country.name.common}</p>
           <p>
-            <span className="text-base font-semibold">Population: </span>
-            {country.population}
+            <span className="font-semibold">Population: </span>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger className="text-xs">
+                  {formatPopulation(country.population)}
+                </TooltipTrigger>
+                <TooltipContent>
+                  <span className="text-xs">{country.population.toLocaleString()}</span>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           </p>
           <p>
-            <span className="text-base font-semibold">Region: </span>
-            {country.region}
+            <span className="font-semibold">Region: </span>
+            <span className="text-xs">{country.region}</span>
           </p>
           <p>
-            <span className="text-base font-semibold">Capital: </span>
-            {country.capital}
+            <span className="font-semibold">Capital: </span>
+            <span className="text-xs">{country.capital}</span>
           </p>
         </div>
         <Image
           src={country.flags.png}
           alt={country.flags.alt ?? `${country.name.common} flag`}
-          className="order-first rounded-t-md"
-          height={200}
+          className="order-first aspect-[16/9] h-full w-full rounded-t-md bg-zinc-950 object-cover"
+          height={300}
           width={300}
         />
       </Link>
@@ -236,9 +258,12 @@ export default function CountriesList({ data }: CountryProps) {
         </div>
       </div>
 
-      <section className="grid grid-cols-auto-fill justify-items-center gap-8 pt-4 sm:px-6 lg:gap-20">
+      <section className="grid grid-cols-[repeat(auto-fit,_minmax(330px,_1fr))] justify-items-center gap-4 px-2 pt-8 min-[375px]:px-6 sm:px-6 lg:gap-6">
         {countriesList}
       </section>
+      {/* <section className="grid grid-cols-auto-fill justify-items-center gap-8 pt-4 sm:px-6 lg:gap-20">
+        {countriesList}
+      </section> */}
     </section>
   );
 }
