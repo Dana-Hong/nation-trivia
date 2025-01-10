@@ -65,9 +65,14 @@ export default async function Page({ params }: { params: { countryName: string }
           </div>
           <div className="flex gap-2">
             <p className="font-semibold">Languages: </p>
-            {languages.map((language) => (
-              <p key={language}>{language}</p>
-            ))}
+            {languages.map((language, array) => {
+              console.log();
+              return (
+                <p key={language}>{`${language}${
+                  languages.length > 1 && language != languages[languages.length - 1] ? "," : ""
+                }`}</p>
+              );
+            })}
           </div>
           <div className="flex gap-2">
             <p className="font-semibold">Currency: </p>
