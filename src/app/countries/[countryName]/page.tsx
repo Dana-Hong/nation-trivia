@@ -39,7 +39,7 @@ export default async function Page({ params }: { params: { countryName: string }
   }
 
   return (
-    <main className="flex w-full max-w-screen-2xl flex-col gap-4 bg-blue-800 pt-12 sm:flex-row sm:pt-20">
+    <main className="flex w-full max-w-screen-lg flex-col gap-4 bg-blue-800 pt-12 sm:flex-row sm:pt-20">
       <section className="relative mx-auto flex w-full max-w-screen-2xl flex-col items-center bg-red-700 px-2">
         <h1 className="py-8 text-center text-2xl font-semibold sm:hidden">{country.name.common}</h1>
         <Image
@@ -73,16 +73,20 @@ export default async function Page({ params }: { params: { countryName: string }
             <p>{`${country.subregion ?? "N/A"}`}</p>
           </div>
         </div>
-        <div className="grid min-[375px]:grid-cols-2">
+        <div className="flex flex-col">
           <h2 className="col-span-full text-xl font-medium">Demographics</h2>
-          <p className="font-semibold">Languages: </p>
-          {languages.map((language) => {
-            return (
-              <p key={language}>{`${language}${
-                languages.length > 1 && language != languages[languages.length - 1] ? "," : ""
-              }`}</p>
-            );
-          })}
+          <div className="">
+            <p>
+              <span className="font-semibold">Languages:&nbsp;</span>
+              {languages.map((language) => {
+                return (
+                  <span key={language}>{`${language}${
+                    languages.length > 1 && language != languages[languages.length - 1] ? ", " : ""
+                  }`}</span>
+                );
+              })}
+            </p>
+          </div>
         </div>
         <div className="flex gap-2">
           <p className="font-semibold">Currency: </p>
