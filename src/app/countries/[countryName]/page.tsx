@@ -81,7 +81,7 @@ export default async function Page({ params }: { params: { countryName: string }
               {languages.map((language) => {
                 return (
                   <span key={language}>{`${language}${
-                    languages.length > 1 && language != languages[languages.length - 1] ? ", " : ""
+                    languages.length > 1 && language !== languages[languages.length - 1] ? ", " : ""
                   }`}</span>
                 );
               })}
@@ -96,13 +96,17 @@ export default async function Page({ params }: { params: { countryName: string }
         </div>
         <div className="bg-orange-700">
           <h2 className="col-span-full text-xl font-medium">Demographics</h2>
-          <div className="grid grid-cols-2">
+          <div className="grid bg-gray-700">
             <p className="font-semibold">
               Borders:
               {borderCountries
-                ? borderCountries.map((borderingCountry: string) => (
-                    <span key={borderingCountry} className="px-1">
-                      <Link href={`/countries/${borderingCountry}`}>{borderingCountry}</Link>
+                ? borderCountries.map((borderingCountry: string, index: number) => (
+                    <span key={borderingCountry} className="inline-block pl-1">
+                      <Link href={`/countries/${borderingCountry}`}>
+                        {borderCountries.length > 1 && index !== borderCountries.length - 1
+                          ? `${borderingCountry}, `
+                          : borderingCountry}
+                      </Link>
                     </span>
                   ))
                 : "None"}
