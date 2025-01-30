@@ -39,8 +39,8 @@ export default async function Page({ params }: { params: { countryName: string }
   }
 
   return (
-    <main className="flex w-full max-w-screen-2xl flex-col gap-4 pt-12 sm:flex-row sm:pt-20">
-      <section className="relative mx-auto flex w-full max-w-screen-2xl flex-col items-center px-2">
+    <main className="flex w-full max-w-screen-lg flex-col gap-4 bg-blue-800 pt-12 sm:flex-row sm:pt-20">
+      <section className="relative mx-auto flex w-full max-w-screen-2xl flex-col items-center bg-red-700 px-2">
         <h1 className="py-8 text-center text-2xl font-semibold sm:hidden">{country.name.common}</h1>
         <Image
           src={country.flags.png}
@@ -50,11 +50,12 @@ export default async function Page({ params }: { params: { countryName: string }
           className="rounded-md"
         />
       </section>
-      <section className="mx-auto w-full max-w-screen-2xl px-2">
-        <h1 className="hidden pb-4 text-center text-2xl font-semibold sm:block md:text-left">
+      <section className="mx-auto w-full max-w-screen-2xl bg-green-800 px-2">
+        <h1 className="hidden bg-pink-500 pb-4 text-center text-2xl font-semibold sm:block md:text-left">
           {country.name.common}
         </h1>
-        <div className="grid min-[375px]:grid-cols-2">
+        <div className="grid bg-teal-700 min-[375px]:grid-cols-2">
+          <h2 className="col-span-full text-xl font-medium">Basic Info</h2>
           <div className="flex gap-2">
             <p className="font-semibold">Capital City:</p>
             <p>{`${country.capital ?? "N/A"}`}</p>
@@ -62,18 +63,6 @@ export default async function Page({ params }: { params: { countryName: string }
           <div className="flex gap-2">
             <p className="font-semibold">Population:</p>
             <p>{formatPopulation(country.population)}</p>
-          </div>
-          <div className="flex gap-2">
-            <p className="font-semibold">Languages: </p>
-            {languages.map((language) => (
-              <p key={language}>{language}</p>
-            ))}
-          </div>
-          <div className="flex gap-2">
-            <p className="font-semibold">Currency: </p>
-            {currencies.length !== 0
-              ? currencies?.map((currency) => <p key={currency.name}>{currency.name}</p>)
-              : "N/A"}
           </div>
           <div className="flex gap-2">
             <p className="font-semibold">Region:</p>
@@ -84,16 +73,44 @@ export default async function Page({ params }: { params: { countryName: string }
             <p>{`${country.subregion ?? "N/A"}`}</p>
           </div>
         </div>
-        <div>
-          <p className="font-semibold">Borders:</p>
-          <div className="flex flex-col">
-            {borderCountries
-              ? borderCountries.map((borderingCountry: string) => (
-                  <span key={borderingCountry} className="inline-block">
-                    <Link href={`/countries/${borderingCountry}`}>{borderingCountry}</Link>
-                  </span>
-                ))
-              : "None"}
+        <div className="flex flex-col">
+          <h2 className="col-span-full text-xl font-medium">Demographics</h2>
+          <div className="">
+            <p>
+              <span className="font-semibold">Languages:&nbsp;</span>
+              {languages.map((language) => {
+                return (
+                  <span key={language}>{`${language}${
+                    languages.length > 1 && language !== languages[languages.length - 1] ? ", " : ""
+                  }`}</span>
+                );
+              })}
+            </p>
+          </div>
+        </div>
+        <div className="flex gap-2">
+          <p className="font-semibold">Currency: </p>
+          {currencies.length !== 0
+            ? currencies?.map((currency) => <p key={currency.name}>{currency.name}</p>)
+            : "N/A"}
+        </div>
+        <div className="bg-orange-700">
+          <h2 className="col-span-full text-xl font-medium">Demographics</h2>
+          <div className="grid bg-gray-700">
+            <p className="font-semibold">
+              Borders:
+              {borderCountries
+                ? borderCountries.map((borderingCountry: string, index: number) => (
+                    <span key={borderingCountry} className="inline-block pl-1">
+                      <Link href={`/countries/${borderingCountry}`}>
+                        {borderCountries.length > 1 && index !== borderCountries.length - 1
+                          ? `${borderingCountry}, `
+                          : borderingCountry}
+                      </Link>
+                    </span>
+                  ))
+                : "None"}
+            </p>
           </div>
         </div>
       </section>
